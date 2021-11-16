@@ -1,5 +1,7 @@
 const webpack = require("webpack");
 const path = require("path"); // Module Node utilisable avec Webpack, sert a résoudre les chemins relatifs
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizePlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
     // Point d'entrée JS, fichier qui contiendra vos includes
@@ -12,5 +14,39 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "public/build/js"),
         filename: "[name].js"
-    }
+    },
+
+    module: {
+        rules: [
+            // Rècles fichiers CSS.
+            {
+                test: /\.css$/i,
+                use: [
+                    {
+                        // style-loader injecte le css dans le <head>
+                        // MiniCssExtractPlugin injecte le css dans un fichier css portant le même nom par défaut
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            import: true,
+                            url: true,
+                            sourceMap: true
+                        }
+                    }
+                ],
+            }
+        ]
+    },
+
+    optimization: {
+        minimizer: [
+            new CssMinimizePlugin()
+        ]
+    },
+
+    plugins: [].concat([new MiniCssExtractPlugin({
+        filename: "../css/[name].css"
+    })]),
 };
