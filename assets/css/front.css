@@ -4,3 +4,7 @@
 body {
     background: mediumseagreen;
 }
+
+div {
+    background-image: url("../images/imcss.jpg");
+}
