@@ -41,6 +41,15 @@ module.exports = {
                 generator: {
                     filename: "images/[name][ext]"
                 }
+            },
+
+            {
+                test: /\.js$/,
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/preset-env"],
+                    plugins: ["@babel/plugin-proposal-object-rest-spread"]
+                }
             }
 
         ]
